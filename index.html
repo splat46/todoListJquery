@@ -104,6 +104,16 @@
 
   <script>
   	$('#total-count').html($('.todo').length);
+    function updateCounters() {
+        let todoCount = $('.todo').length;
+        let completedCount = $('.completed').length;
+
+        $('#total-count').html(todoCount);
+        $('#completed-count').html(completedCount);
+        $('#todo-count').html(todoCount - completedCount);
+    }
+
+    updateCounters();
 
   </script>
   
