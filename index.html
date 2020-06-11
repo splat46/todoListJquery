@@ -113,20 +113,60 @@
         $('#todo-count').html(todoCount - completedCount);
     }
 
-    
-
     function toggleDone() {
         let checkbox = this;
 
         $(checkbox).parent().toggleClass('completed');
     }
 
-    // put this at the bottom of your JavaScript section
-
     $(document).ready(function() {
         $("input[type=checkbox]").on('change', toggleDone);
         updateCounters();
     });
+
+    $("form").on('submit', submitTodo);
+    function submitTodo(event) {
+        //stop the form from doing the default action, submitting...
+        event.preventDefault();
+
+        let title = $('#new-todo').val();
+
+        createTodo(title);
+
+        $('#new-todo').val(null);
+        updateCounters();
+    }
+
+    function createTodo(title) {
+        let checkboxId = "todo-" + nextTodoId();
+
+        let listItem = $("<li></li>");
+        listItem.addClass("todo");
+
+        let checkbox = $('<input>');
+        checkbox.attr('type', 'checkbox');
+        checkbox.attr('id', checkboxId);
+        checkbox.val(1);
+        checkbox.on('change', toggleDone);
+
+        let space = document.createTextNode(" ");
+
+        let label = $('<label></label>');
+        label.attr('for', checkboxId);
+        label.html(title);
+
+        listItem.append(checkbox);
+        listItem.append(space);
+        listItem.append(label);
+
+        $("#todolist").append( listItem );
+
+        updateCounters();
+    }
+
+    function nextTodoId() {
+        return $(".todo").length + 1;
+    }
   </script>
   
 </body>
